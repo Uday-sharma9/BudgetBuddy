@@ -1,0 +1,493 @@
+=== 2025-04-16 18:36:26 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:36:28 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:36:33 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:43:11 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:43:55 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:44:04 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:44:27 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:44:47 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:45:32 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:46:20 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 18:49:35 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:05:47 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:07:07 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:07:16 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:07:28 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:07:38 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:13:56 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:19:28 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:19:41 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:26:09 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:28:17 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:28:23 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:33:12 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:34:00 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"tyu","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:34:08 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:34:08 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:34:35 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:34:40 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"fghjkl","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+
+=== 2025-04-16 19:34:40 ===
+Request Method: GET
+Request URI: /IBP/BUDGET/bBudgetNEW/debug_ajax.php
+POST Data: Array
+(
+)
+
+GET Data: Array
+(
+)
+
+Raw Request Data: 
+
+SQL Query: SELECT id, source, amount, income_date, notes, document FROM income ORDER BY income_date DESC
+Result Count: 7
+Result: [{"id":9,"source":"asdfg","amount":2345,"income_date":"2025-04-26","notes":"","document":null},{"id":17,"source":"hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":18,"source":"happy hello","amount":2000,"income_date":"2025-04-25","notes":"","document":null},{"id":22,"source":"SALARY","amount":67788,"income_date":"2025-04-23","notes":"","document":null},{"id":6,"source":"salary","amount":4000,"income_date":"2025-04-18","notes":"fghjkl","document":null},{"id":4,"source":"SALARY","amount":20000,"income_date":"2025-04-10","notes":null,"document":null},{"id":7,"source":"villa rent","amount":10000000,"income_date":"2025-04-03","notes":null,"document":null}]
+

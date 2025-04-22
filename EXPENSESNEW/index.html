@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expense Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Enhanced Styles */
+    .stat-box {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        border: 1px solid rgba(139, 92, 246, 0.1);
+    }
+    .stat-box:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 25px -5px rgba(139, 92, 246, 0.1), 0 10px 10px -5px rgba(139, 92, 246, 0.04);
+    }
+    .stat-box:hover .icon {
+        transform: scale(1.3) rotate(5deg);
+        color: #8b5cf6;
+    }
+    .stat-box:hover h3 {
+        color: #8b5cf6;
+        transform: translateX(5px);
+    }
+
+    .quick-expense-btn {
+        background: linear-gradient(145deg, #f3f4f6, #ffffff);
+        border: 1px solid rgba(139, 92, 246, 0.1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .quick-expense-btn:hover {
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 20px 25px -5px rgba(139, 92, 246, 0.1), 0 10px 10px -5px rgba(139, 92, 246, 0.04);
+        background: linear-gradient(145deg, #ffffff, #f3f4f6);
+    }
+    .quick-expense-btn:hover i {
+        transform: scale(1.3) rotate(5deg);
+        color: #8b5cf6;
+    }
+    .quick-expense-btn:hover p {
+        color: #8b5cf6;
+        transform: translateY(-2px);
+    }
+
+    /* Enhanced Form Styles */
+    .form-input {
+        transition: all 0.3s ease;
+        background: linear-gradient(145deg, #ffffff, #f3f4f6);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+    .form-input:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.1), 0 4px 6px -2px rgba(139, 92, 246, 0.05);
+        border-color: #8b5cf6;
+    }
+
+    /* Enhanced Button Styles */
+    .btn-primary {
+        background: linear-gradient(145deg, #8b5cf6, #7c3aed);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1), 0 2px 4px -1px rgba(139, 92, 246, 0.06);
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.1), 0 4px 6px -2px rgba(139, 92, 246, 0.05);
+    }
+
+    /* Budget-related background pattern */
+    body {
+        background-color: #ffffff;
+        background-image: 
+            radial-gradient(circle at 25px 25px, rgba(139, 92, 246, 0.1) 2%, transparent 0%),
+            radial-gradient(circle at 75px 75px, rgba(139, 92, 246, 0.1) 2%, transparent 0%);
+        background-size: 100px 100px;
+        position: relative;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            linear-gradient(45deg, transparent 48%, rgba(139, 92, 246, 0.05) 48%, rgba(139, 92, 246, 0.05) 52%, transparent 52%),
+            linear-gradient(-45deg, transparent 48%, rgba(139, 92, 246, 0.05) 48%, rgba(139, 92, 246, 0.05) 52%, transparent 52%);
+        background-size: 60px 60px;
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+    /* Ensure content stays above the background */
+    .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .icon {
+      transition: all 0.3s ease;
+    }
+    .dark-mode {
+      background: #1a1a1a;
+      color: #ffffff;
+    }
+    .dark-mode .bg-white {
+      background: #2d2d2d;
+      color: #ffffff;
+    }
+    .dark-mode .text-black {
+      color: #ffffff;
+    }
+    .dark-mode .border-violet-400 {
+      border-color: #8b5cf6;
+    }
+    .dark-mode .bg-gray-200 {
+      background: #3d3d3d;
+    }
+    .dark-mode .text-gray-600 {
+      color: #a0a0a0;
+    }
+    .quick-expense-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 150px;
+      transition: all 0.3s ease;
+    }
+    .quick-expense-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .quick-expense-btn i {
+      transition: all 0.3s ease;
+    }
+    .quick-expense-btn:hover i {
+      transform: scale(1.2);
+      color: #8b5cf6;
+    }
+    .quick-expense-btn p {
+      transition: all 0.3s ease;
+    }
+    .quick-expense-btn:hover p {
+      color: #8b5cf6;
+    }
+    .notification {
+      animation: slideIn 0.5s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+    /* Custom scrollbar for the edit modal */
+    #editModal .overflow-y-auto::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #editModal .overflow-y-auto::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    #editModal .overflow-y-auto::-webkit-scrollbar-thumb {
+      background: #8b5cf6;
+      border-radius: 4px;
+    }
+
+    #editModal .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+      background: #7c3aed;
+    }
+  </style>
+</head>
+<body class="bg-white text-black flex flex-col items-center min-h-screen p-4 font-sans">
+  <!-- Main Content -->
+  <div class="container mx-auto px-4 py-8">
+    <!-- Quick Expense Buttons -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <button class="quick-expense-btn bg-violet-50 text-violet-700 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" onclick="quickAdd('Food & Groceries')">
+        <i class="fas fa-utensils text-4xl mb-3"></i>
+        <p class="font-semibold text-lg">Food</p>
+      </button>
+      <button class="quick-expense-btn bg-violet-50 text-violet-700 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" onclick="quickAdd('Transport & Fuel')">
+        <i class="fas fa-car text-4xl mb-3"></i>
+        <p class="font-semibold text-lg">Transport</p>
+      </button>
+      <button class="quick-expense-btn bg-violet-50 text-violet-700 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" onclick="quickAdd('Entertainment')">
+        <i class="fas fa-film text-4xl mb-3"></i>
+        <p class="font-semibold text-lg">Entertainment</p>
+      </button>
+      <button class="quick-expense-btn bg-violet-50 text-violet-700 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" onclick="quickAdd('Shopping')">
+        <i class="fas fa-shopping-bag text-4xl mb-3"></i>
+        <p class="font-semibold text-lg">Shopping</p>
+      </button>
+    </div>
+
+    <!-- Add Expense Section -->
+    <div class="flex justify-center mb-8">
+      <div class="bg-violet-50 text-violet-700 p-6 rounded-2xl shadow-xl w-full max-w-2xl transition-all duration-300 hover:shadow-2xl">
+        <div class="flex justify-between items-center mb-4">
+          <h1 class="text-4xl font-extrabold text-violet-700">Track Your Expenses</h1>
+          <button onclick="openExpenseListModal()" class="text-violet-700 hover:text-violet-800 text-lg">
+            <i class="fas fa-list"></i> View/Edit Expenses
+          </button>
+        </div>
+        <form action="add_expense.php" method="POST" enctype="multipart/form-data" class="space-y-3">
+          <div class="space-y-1">
+            <label class="text-sm font-medium text-black">Category</label>
+            <div class="relative">
+              <select name="category" id="categorySelect" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none text-black" required>
+                <option value="" disabled selected>Select Category</option>
+                <option value="Food & Groceries">🍔 Food & Groceries</option>
+                <option value="Electricity">⚡ Electricity</option>
+                <option value="Entertainment">🎬 Entertainment</option>
+                <option value="Transport & Fuel">🚗 Transport & Fuel</option>
+                <option value="Rent & Housing">🏠 Rent & Housing</option>
+                <option value="Healthcare & Medical">🏥 Healthcare & Medical</option>
+                <option value="Shopping">🛍️ Shopping</option>
+                <option value="Education & Learning">📚 Education & Learning</option>
+                <option value="Others">➕ Others</option>
+              </select>
+            </div>
+            <div id="customCategoryContainer" class="hidden mt-2">
+              <input type="text" id="customCategory" placeholder="Enter custom category" 
+                     class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none text-black">
+            </div>
+          </div>
+
+          <input type="text" name="item" placeholder="Item (e.g., Samosa)" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none" required>
+
+          <input type="number" name="amount" placeholder="Amount (₹)" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none" required>
+
+          <input type="date" name="date" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none" required>
+
+          <!-- Note Field -->
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-violet-700">Add a Note (Optional)</label>
+            <textarea name="note" placeholder="Add any additional details about this expense..." 
+                      class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none resize-none h-24"></textarea>
+          </div>
+
+          <!-- Receipt Upload Field -->
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-violet-700">Upload Receipt (Optional)</label>
+            <div class="flex items-center justify-center w-full">
+              <label class="flex flex-col w-full h-32 border-2 border-violet-400 border-dashed rounded-lg cursor-pointer hover:bg-violet-50">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <i class="fas fa-cloud-upload-alt text-3xl text-violet-700 mb-2"></i>
+                  <p class="mb-2 text-sm text-gray-500">Click to upload or drag and drop</p>
+                  <p class="text-xs text-gray-500">PNG, JPG, PDF (MAX. 2MB)</p>
+                </div>
+                <input type="file" name="receipt" class="hidden" accept=".png,.jpg,.jpeg,.pdf" />
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-violet-700 text-white py-3 font-semibold rounded-lg hover:bg-violet-800 transition-all duration-200">➕ Add Expense</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Filter Sections -->
+    <div class="w-full space-y-8 mb-8">
+      <div class="flex justify-center gap-8">
+        <!-- Date Filter Box -->
+        <div class="bg-violet-50 text-violet-700 p-6 rounded-2xl shadow-xl transition-all duration-300 hover:shadow-2xl w-full max-w-sm">
+          <div class="flex items-center justify-center mb-4">
+            <i class="fas fa-calendar text-3xl text-violet-700 mr-3"></i>
+            <h2 class="text-2xl font-bold text-violet-700">Filter by Date</h2>
+          </div>
+          <div class="space-y-3">
+            <input type="date" id="filterDate" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none">
+            <button onclick="showExpensesByDate()" class="w-full bg-violet-700 text-white py-3 font-semibold rounded-lg hover:bg-violet-800 transition-all duration-200">
+              <i class="fas fa-calendar-alt mr-2"></i>Show Expenses by Date
+            </button>
+          </div>
+        </div>
+
+        <!-- Category Filter Box -->
+        <div class="bg-violet-50 text-violet-700 p-6 rounded-2xl shadow-xl transition-all duration-300 hover:shadow-2xl w-full max-w-sm">
+          <div class="flex items-center justify-center mb-4">
+            <i class="fas fa-tags text-3xl text-violet-700 mr-3"></i>
+            <h2 class="text-2xl font-bold text-violet-700">Filter by Category</h2>
+          </div>
+          <div class="space-y-3">
+            <select id="filterCategory" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none">
+              <option value="" selected>All Categories</option>
+              <option value="Food & Groceries">🍔 Food & Groceries</option>
+              <option value="Electricity">⚡ Electricity</option>
+              <option value="Entertainment">🎬 Entertainment</option>
+              <option value="Transport & Fuel">🚗 Transport & Fuel</option>
+              <option value="Rent & Housing">🏠 Rent & Housing</option>
+              <option value="Healthcare & Medical">🏥 Healthcare & Medical</option>
+              <option value="Shopping">🛍️ Shopping</option>
+              <option value="Education & Learning">📚 Education & Learning</option>
+            </select>
+            <button onclick="showExpensesByCategory()" class="w-full bg-violet-700 text-white py-3 font-semibold rounded-lg hover:bg-violet-800 transition-all duration-200">
+              <i class="fas fa-filter mr-2"></i>Show Expenses by Category
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expense Distribution Section -->
+    <div class="bg-violet-50 text-violet-700 p-6 rounded-2xl shadow-xl w-full mb-16">
+      <h2 class="text-2xl font-bold text-violet-700 text-center mb-4">Your Spending Overview</h2>
+      <div class="space-y-4" id="expenseBars">
+        <!-- Progress bars will be added here dynamically -->
+      </div>
+    </div>
+
+    <!-- Expense List Modal -->
+    <div id="expenseListModal" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
+          <!-- Modal Header -->
+          <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-violet-50">
+            <h2 class="text-2xl font-bold text-black">Expense List</h2>
+            <button onclick="closeExpenseListModal()" class="text-gray-700 hover:text-gray-900">
+              <i class="fas fa-times text-2xl"></i>
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="bg-violet-100">
+                    <th class="p-3 text-left text-black font-semibold">Date</th>
+                    <th class="p-3 text-left text-black font-semibold">Category</th>
+                    <th class="p-3 text-left text-black font-semibold">Item</th>
+                    <th class="p-3 text-left text-black font-semibold">Amount</th>
+                    <th class="p-3 text-left text-black font-semibold">Note</th>
+                    <th class="p-3 text-left text-black font-semibold">Receipt</th>
+                    <th class="p-3 text-left text-black font-semibold">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="expenseList" class="text-black">
+                  <!-- Expenses will be loaded here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="p-6 border-t border-gray-200 bg-violet-50 flex justify-end">
+            <button onclick="closeExpenseListModal()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+              <i class="fas fa-times mr-2"></i>Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Expense Modal -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] flex flex-col">
+          <!-- Modal Header -->
+          <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-violet-50">
+            <h2 class="text-2xl font-bold text-black">Edit Expense</h2>
+            <button onclick="closeEditModal()" class="text-gray-700 hover:text-gray-900">
+              <i class="fas fa-times text-2xl"></i>
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="overflow-y-auto flex-1 p-6">
+            <form id="editForm" action="manage_expenses.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+              <input type="hidden" name="id" id="editId">
+              <input type="hidden" name="edit" value="1">
+              
+              <div class="space-y-1">
+                <label class="text-sm font-medium text-black">Category</label>
+                <select name="category" id="editCategory" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none text-black" required>
+                  <option value="" disabled selected>Select Category</option>
+                  <option value="Food & Groceries">🍔 Food & Groceries</option>
+                  <option value="Electricity">⚡ Electricity</option>
+                  <option value="Entertainment">🎬 Entertainment</option>
+                  <option value="Transport & Fuel">🚗 Transport & Fuel</option>
+                  <option value="Rent & Housing">🏠 Rent & Housing</option>
+                  <option value="Healthcare & Medical">🏥 Healthcare & Medical</option>
+                  <option value="Shopping">🛍️ Shopping</option>
+                  <option value="Education & Learning">📚 Education & Learning</option>
+                </select>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-sm font-medium text-black">Item</label>
+                <input type="text" name="item" id="editItem" placeholder="Item" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none text-black" required>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-sm font-medium text-black">Amount</label>
+                <input type="number" name="amount" id="editAmount" placeholder="Amount" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none text-black" required>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-sm font-medium text-black">Date</label>
+                <input type="date" name="date" id="editDate" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none text-black" required>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-sm font-medium text-black">Note (Optional)</label>
+                <textarea name="note" id="editNote" placeholder="Add a note" class="w-full p-3 border border-violet-400 rounded-lg focus:ring-2 focus:ring-violet-700 focus:outline-none resize-none h-24 text-black"></textarea>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-sm font-medium text-black">Receipt (Optional)</label>
+                <div class="flex items-center justify-center w-full">
+                  <label class="flex flex-col w-full h-32 border-2 border-violet-400 border-dashed rounded-lg cursor-pointer hover:bg-violet-50">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                      <i class="fas fa-cloud-upload-alt text-3xl text-violet-700 mb-2"></i>
+                      <p class="mb-2 text-sm text-gray-600">Click to upload or drag and drop</p>
+                      <p class="text-xs text-gray-600">PNG, JPG, PDF (MAX. 2MB)</p>
+                    </div>
+                    <input type="file" name="receipt" class="hidden" accept=".png,.jpg,.jpeg,.pdf" />
+                  </label>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="p-6 border-t border-gray-200 bg-violet-50 flex justify-end space-x-3">
+            <button onclick="closeEditModal()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+              <i class="fas fa-times mr-2"></i>Cancel
+            </button>
+            <button onclick="showSaveConfirmation()" class="px-4 py-2 bg-violet-700 text-white rounded-lg hover:bg-violet-800">
+              <i class="fas fa-save mr-2"></i>Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Confirmation Modal -->
+    <div id="saveConfirmationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md">
+          <div class="p-6 text-center">
+            <i class="fas fa-question-circle text-4xl text-violet-700 mb-4"></i>
+            <h3 class="text-xl font-bold text-black mb-2">Save Changes?</h3>
+            <p class="text-gray-600 mb-4">Are you sure you want to save these changes to the expense?</p>
+            <div class="flex justify-center space-x-4">
+              <button onclick="closeSaveConfirmation()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                <i class="fas fa-times mr-2"></i>Cancel
+              </button>
+              <button onclick="saveExpenseChanges()" class="px-4 py-2 bg-violet-700 text-white rounded-lg hover:bg-violet-800">
+                <i class="fas fa-check mr-2"></i>Yes, Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="fixed bottom-4 right-4 space-y-2"></div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md">
+          <div class="p-6 text-center">
+            <i class="fas fa-exclamation-triangle text-4xl text-red-500 mb-4"></i>
+            <h3 class="text-xl font-bold text-black mb-2">Delete Expense?</h3>
+            <p class="text-gray-600 mb-4">Are you sure you want to delete this expense? This action cannot be undone.</p>
+            <div class="flex justify-center space-x-4">
+              <button onclick="closeDeleteConfirmation()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                <i class="fas fa-times mr-2"></i>Cancel
+              </button>
+              <button onclick="confirmDelete()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                <i class="fas fa-trash mr-2"></i>Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filter Results Modal -->
+    <div id="categoryFilterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
+          <!-- Modal Header -->
+          <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-violet-50">
+            <h2 class="text-2xl font-bold text-black">Expenses for <span id="selectedCategory"></span></h2>
+            <button onclick="closeCategoryFilterModal()" class="text-gray-700 hover:text-gray-900">
+              <i class="fas fa-times text-2xl"></i>
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="bg-violet-100">
+                    <th class="p-3 text-left text-black font-semibold">Date</th>
+                    <th class="p-3 text-left text-black font-semibold">Item</th>
+                    <th class="p-3 text-left text-black font-semibold">Amount</th>
+                    <th class="p-3 text-left text-black font-semibold">Note</th>
+                    <th class="p-3 text-left text-black font-semibold">Receipt</th>
+                  </tr>
+                </thead>
+                <tbody id="categoryFilterResults" class="text-black">
+                  <!-- Results will be loaded here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="p-6 border-t border-gray-200 bg-violet-50 flex justify-between items-center">
+            <div class="text-lg font-semibold text-violet-700">
+              Total: ₹<span id="categoryTotal">0</span>
+            </div>
+            <button onclick="closeCategoryFilterModal()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+              <i class="fas fa-times mr-2"></i>Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Date Filter Results Modal -->
+    <div id="dateFilterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
+          <!-- Modal Header -->
+          <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-violet-50">
+            <h2 class="text-2xl font-bold text-black">Expenses for <span id="selectedDate"></span></h2>
+            <button onclick="closeDateFilterModal()" class="text-gray-700 hover:text-gray-900">
+              <i class="fas fa-times text-2xl"></i>
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="bg-violet-100">
+                    <th class="p-3 text-left text-black font-semibold">Category</th>
+                    <th class="p-3 text-left text-black font-semibold">Item</th>
+                    <th class="p-3 text-left text-black font-semibold">Amount</th>
+                    <th class="p-3 text-left text-black font-semibold">Note</th>
+                    <th class="p-3 text-left text-black font-semibold">Receipt</th>
+                  </tr>
+                </thead>
+                <tbody id="dateFilterResults" class="text-black">
+                  <!-- Results will be loaded here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="p-6 border-t border-gray-200 bg-violet-50 flex justify-between items-center">
+            <div class="text-lg font-semibold text-violet-700">
+              Total: ₹<span id="dateTotal">0</span>
+            </div>
+            <button onclick="closeDateFilterModal()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+              <i class="fas fa-times mr-2"></i>Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-black text-white py-12 w-full">
+    <div class="w-full  ">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            
+            <!-- Left: BudgetBuddy Branding -->
+            <div class="transform hover:scale-105 transition-transform duration-300">
+                <h2 class="text-2xl font-bold mb-4">BudgetBuddy</h2>
+                <p class="text-gray-300 mb-6">Your trusted partner in financial planning</p>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="social-icon text-2xl hover:text-violet-400 transition-colors">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="social-icon text-2xl hover:text-violet-400 transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon text-2xl hover:text-violet-400 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon text-2xl hover:text-violet-400 transition-colors">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Middle: Quick Links -->
+            <div class="transform hover:scale-105 transition-transform duration-300">
+                <h2 class="text-2xl font-bold mb-4">Quick Links</h2>
+                <ul class="space-y-3">
+                    <li><a href="#" class="footer-link text-gray-300 hover:text-violet-400">Home</a></li>
+                    <li><a href="#" class="footer-link text-gray-300 hover:text-violet-400">Dashboard</a></li>
+                    <li><a href="#" class="footer-link text-gray-300 hover:text-violet-400">Budget</a></li>
+                    <li><a href="#" class="footer-link text-gray-300 hover:text-violet-400">Expenses</a></li>
+                </ul>
+            </div>
+
+            <!-- Right: Contact Info -->
+            <div class="transform hover:scale-105 transition-transform duration-300">
+                <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
+                <div class="space-y-3 text-gray-300">
+                    <p class="flex items-center justify-center">
+                        <i class="fas fa-envelope mr-2 text-violet-400"></i>
+                        support@budgetbuddy.com
+                    </p>
+                    <p class="flex items-center justify-center">
+                        <i class="fas fa-phone mr-2 text-violet-400"></i>
+                        1100198763
+                    </p>
+                    <p class="flex items-center justify-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-violet-400"></i>
+                        BudgetBuddy Office, Phagwara, Punjab, India
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom: Copyright -->
+        <div class="mt-12 border-t border-gray-800 pt-6 text-center text-gray-400">
+            © 2025 BudgetBuddy. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    let isDarkMode = false;
+
+    themeToggle.addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      body.classList.toggle('dark-mode');
+      themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+
+    // Quick Add Function
+    function quickAdd(category) {
+      const form = document.querySelector('form');
+      form.querySelector('select[name="category"]').value = category;
+      form.querySelector('input[name="amount"]').focus();
+      showNotification(`Quick add: ${category} selected`, 'info');
+    }
+
+    // Budget Edit Function
+    function editBudget() {
+      const newBudget = prompt('Enter new monthly budget:');
+      if (newBudget && !isNaN(newBudget)) {
+        document.getElementById('budgetAmount').textContent = `₹${parseInt(newBudget).toLocaleString()}`;
+        showNotification('Budget updated successfully!', 'success');
+      }
+    }
+
+    // Notification System
+    function showNotification(message, type = 'info') {
+      const container = document.getElementById('notificationContainer');
+      const notification = document.createElement('div');
+      notification.className = `notification bg-white text-black p-4 rounded-lg shadow-lg flex items-center ${
+        type === 'success' ? 'border-l-4 border-green-500' : 'border-l-4 border-blue-500'
+      }`;
+      
+      notification.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'} text-${type === 'success' ? 'green' : 'blue'}-500 mr-2"></i>
+        <span>${message}</span>
+      `;
+      
+      container.appendChild(notification);
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    // Function to create expense distribution bars
+    function createExpenseBars(data) {
+      const container = document.getElementById('expenseBars');
+      container.innerHTML = ''; // Clear existing content
+
+      // Ensure we have at least 4 categories
+      const defaultCategories = [
+        { category: 'Food & Groceries', amount: 0 },
+        { category: 'Transport & Fuel', amount: 0 },
+        { category: 'Entertainment', amount: 0 },
+        { category: 'Shopping', amount: 0 }
+      ];
+
+      // Merge actual data with default categories
+      const categories = [...defaultCategories];
+      if (data.categories && data.total > 0) {
+        data.categories.forEach(expense => {
+          const index = categories.findIndex(cat => cat.category === expense.category);
+          if (index !== -1) {
+            categories[index].amount = expense.amount;
+          } else {
+            categories.push(expense);
+          }
+        });
+      }
+
+      // Sort categories by amount (descending)
+      categories.sort((a, b) => b.amount - a.amount);
+
+      // Create bars for each category
+      categories.forEach(category => {
+        const percentage = (category.amount / (data.total || 1)) * 100;
+        const bar = document.createElement('div');
+        bar.className = 'space-y-1';
+        bar.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="font-semibold">${category.category}</span>
+            <span class="text-sm text-gray-600">₹${category.amount.toLocaleString()}</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-4">
+            <div class="bg-violet-600 h-4 rounded-full transition-all duration-500 ease-out" 
+                 style="width: ${percentage}%"></div>
+          </div>
+        `;
+        container.appendChild(bar);
+      });
+    }
+
+    // Update the fetch and display expense statistics
+    fetch('expense_stats.php')
+      .then(response => response.json())
+      .then(data => {
+        // Update total expense
+        document.getElementById('totalExpense').textContent = `₹${data.total.toLocaleString()}`;
+        
+        // Update highest spending category
+        if (data.highest_category) {
+          document.getElementById('maxExpense').textContent = 
+            `${data.highest_category.category}: ₹${data.highest_category.amount.toLocaleString()}`;
+        } else {
+          document.getElementById('maxExpense').textContent = 'No expenses recorded yet';
+        }
+
+        // Update average expense
+        document.getElementById('avgExpense').textContent = `₹${Math.round(data.avg_amount).toLocaleString()}`;
+
+        // Update most frequent category
+        if (data.most_frequent_category) {
+          document.getElementById('freqCategory').textContent = 
+            `${data.most_frequent_category.category} (${data.most_frequent_category.frequency} times)`;
+        } else {
+          document.getElementById('freqCategory').textContent = 'No expenses recorded yet';
+        }
+
+        // Create expense distribution bars
+        createExpenseBars(data);
+      })
+      .catch(error => console.error('Error fetching expense stats:', error));
+
+    // File upload preview
+    document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const preview = document.createElement('div');
+          preview.className = 'mt-2 p-2 bg-violet-50 rounded-lg';
+          preview.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-violet-700">${file.name}</span>
+              <button onclick="this.parentElement.parentElement.remove()" class="text-red-500 hover:text-red-700">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          `;
+          document.querySelector('.space-y-2').appendChild(preview);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Function to toggle expense list visibility
+    function toggleExpenseList() {
+      const expenseListSection = document.getElementById('expenseListSection');
+      expenseListSection.classList.toggle('hidden');
+      if (!expenseListSection.classList.contains('hidden')) {
+        loadExpenses();
+      }
+    }
+
+    // Function to show confirmation modal
+    function showConfirmationModal(title, message, action, id) {
+      document.getElementById('confirmationTitle').textContent = title;
+      document.getElementById('confirmationMessage').textContent = message;
+      document.getElementById('confirmationModal').classList.remove('hidden');
+      document.getElementById('confirmationModal').dataset.action = action;
+      document.getElementById('confirmationModal').dataset.id = id;
+    }
+
+    // Function to close confirmation modal
+    function closeConfirmationModal() {
+      document.getElementById('confirmationModal').classList.add('hidden');
+    }
+
+    // Function to handle confirmed action
+    function confirmAction() {
+      const modal = document.getElementById('confirmationModal');
+      const action = modal.dataset.action;
+      const id = modal.dataset.id;
+      
+      if (action === 'delete') {
+        window.location.href = `manage_expenses.php?delete=1&id=${id}`;
+      } else if (action === 'edit') {
+        document.getElementById('editForm').submit();
+      }
+      
+      closeConfirmationModal();
+    }
+
+    // Function to show delete confirmation
+    function showDeleteConfirmation(id) {
+      document.getElementById('deleteConfirmationModal').dataset.id = id;
+      document.getElementById('deleteConfirmationModal').classList.remove('hidden');
+    }
+
+    // Function to close delete confirmation
+    function closeDeleteConfirmation() {
+      document.getElementById('deleteConfirmationModal').classList.add('hidden');
+    }
+
+    // Function to confirm and execute delete
+    function confirmDelete() {
+      const id = document.getElementById('deleteConfirmationModal').dataset.id;
+      window.location.href = `manage_expenses.php?delete=1&id=${id}`;
+    }
+
+    // Function to delete expense
+    function deleteExpense(id) {
+      showDeleteConfirmation(id);
+    }
+
+    // Function to edit expense
+    function editExpense(id, category, item, amount, date, note) {
+      openEditModal(id, category, item, amount, date, note);
+      showConfirmationModal(
+        'Edit Expense',
+        'Are you sure you want to save these changes?',
+        'edit',
+        id
+      );
+    }
+
+    // Function to open edit modal
+    function openEditModal(id, category, item, amount, date, note) {
+      document.getElementById('editId').value = id;
+      document.getElementById('editCategory').value = category;
+      document.getElementById('editItem').value = item;
+      document.getElementById('editAmount').value = amount;
+      document.getElementById('editDate').value = date;
+      document.getElementById('editNote').value = note;
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+
+    // Function to close edit modal
+    function closeEditModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+
+    // Function to open expense list modal
+    function openExpenseListModal() {
+      document.getElementById('expenseListModal').classList.remove('hidden');
+      loadExpenses();
+    }
+
+    // Function to close expense list modal
+    function closeExpenseListModal() {
+      document.getElementById('expenseListModal').classList.add('hidden');
+    }
+
+    // Function to show save confirmation
+    function showSaveConfirmation() {
+      document.getElementById('saveConfirmationModal').classList.remove('hidden');
+    }
+
+    // Function to close save confirmation
+    function closeSaveConfirmation() {
+      document.getElementById('saveConfirmationModal').classList.add('hidden');
+    }
+
+    // Function to save expense changes
+    function saveExpenseChanges() {
+      document.getElementById('editForm').submit();
+    }
+
+    // Function to load expenses
+    function loadExpenses() {
+      fetch('fetch_expenses.php')
+        .then(response => response.json())
+        .then(data => {
+          const expenseList = document.getElementById('expenseList');
+          expenseList.innerHTML = '';
+          
+          data.forEach(expense => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-violet-50';
+            row.innerHTML = `
+              <td class="p-3 text-black">${expense.date}</td>
+              <td class="p-3 text-black">${expense.category}</td>
+              <td class="p-3 text-black">${expense.item}</td>
+              <td class="p-3 text-black">₹${expense.amount.toLocaleString()}</td>
+              <td class="p-3 text-black">${expense.note || '-'}</td>
+              <td class="p-3">
+                ${expense.receipt_path ? 
+                  `<a href="${expense.receipt_path}" target="_blank" class="text-violet-700 hover:text-violet-800">
+                    <i class="fas fa-file-alt"></i> View
+                  </a>` : 
+                  '<span class="text-gray-500">-</span>'
+                }
+              </td>
+              <td class="p-3">
+                <button onclick="editExpense(${expense.id}, '${expense.category}', '${expense.item}', ${expense.amount}, '${expense.date}', '${expense.note || ''}')" 
+                        class="text-violet-700 hover:text-violet-800 mr-2">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button onclick="deleteExpense(${expense.id})" 
+                        class="text-red-500 hover:text-red-700">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            `;
+            expenseList.appendChild(row);
+          });
+        })
+        .catch(error => console.error('Error loading expenses:', error));
+    }
+
+    // Update the View/Edit Expenses button click handler
+    document.querySelector('button[onclick="toggleExpenseList()"]').onclick = openExpenseListModal;
+
+    // Load expenses when page loads
+    document.addEventListener('DOMContentLoaded', loadExpenses);
+
+    // Handle custom category input
+    document.getElementById('categorySelect').addEventListener('change', function() {
+      const customCategoryContainer = document.getElementById('customCategoryContainer');
+      const customCategoryInput = document.getElementById('customCategory');
+      
+      if (this.value === 'Others') {
+        customCategoryContainer.classList.remove('hidden');
+        customCategoryInput.required = true;
+      } else {
+        customCategoryContainer.classList.add('hidden');
+        customCategoryInput.required = false;
+      }
+    });
+
+    // Update form submission to handle custom category
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const categorySelect = document.getElementById('categorySelect');
+      const customCategory = document.getElementById('customCategory');
+      
+      if (categorySelect.value === 'Others' && customCategory.value.trim() !== '') {
+        // Create a hidden input to send the custom category
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'category';
+        hiddenInput.value = customCategory.value.trim();
+        this.appendChild(hiddenInput);
+        
+        // Remove the original select to prevent duplicate submission
+        categorySelect.remove();
+      }
+    });
+
+    // Function to show expenses by date
+    function showExpensesByDate() {
+      const date = document.getElementById('filterDate').value;
+      if (!date) {
+        showNotification('Please select a date', 'error');
+        return;
+      }
+
+      // Format date for display
+      const formattedDate = new Date(date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('selectedDate').textContent = formattedDate;
+
+      // Show loading state
+      const resultsBody = document.getElementById('dateFilterResults');
+      resultsBody.innerHTML = '<tr><td colspan="5" class="text-center p-4">Loading...</td></tr>';
+
+      // Show modal
+      document.getElementById('dateFilterModal').classList.remove('hidden');
+
+      // Fetch expenses for the selected date
+      fetch(`fetch_expenses.php?date=${date}`)
+        .then(response => response.json())
+        .then(data => {
+          resultsBody.innerHTML = '';
+          
+          if (data.length === 0) {
+            resultsBody.innerHTML = '<tr><td colspan="5" class="text-center p-4 text-gray-500">No expenses found for this date</td></tr>';
+            document.getElementById('dateTotal').textContent = '0';
+            return;
+          }
+
+          let total = 0;
+          data.forEach(expense => {
+            total += parseFloat(expense.amount);
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-violet-50';
+            row.innerHTML = `
+              <td class="p-3 text-black">${expense.category}</td>
+              <td class="p-3 text-black">${expense.item}</td>
+              <td class="p-3 text-black">₹${expense.amount.toLocaleString()}</td>
+              <td class="p-3 text-black">${expense.note || '-'}</td>
+              <td class="p-3">
+                ${expense.receipt_path ? 
+                  `<a href="${expense.receipt_path}" target="_blank" class="text-violet-700 hover:text-violet-800">
+                    <i class="fas fa-file-alt"></i> View
+                  </a>` : 
+                  '<span class="text-gray-500">-</span>'
+                }
+              </td>
+            `;
+            resultsBody.appendChild(row);
+          });
+
+          // Update total
+          document.getElementById('dateTotal').textContent = total.toLocaleString();
+        })
+        .catch(error => {
+          console.error('Error fetching expenses:', error);
+          resultsBody.innerHTML = '<tr><td colspan="5" class="text-center p-4 text-red-500">Error loading expenses</td></tr>';
+          document.getElementById('dateTotal').textContent = '0';
+        });
+    }
+
+    // Function to close date filter modal
+    function closeDateFilterModal() {
+      document.getElementById('dateFilterModal').classList.add('hidden');
+    }
+
+    // Function to show expenses by category
+    function showExpensesByCategory() {
+      const category = document.getElementById('filterCategory').value;
+      if (!category) {
+        showNotification('Please select a category', 'error');
+        return;
+      }
+
+      document.getElementById('selectedCategory').textContent = category;
+
+      // Show loading state
+      const resultsBody = document.getElementById('categoryFilterResults');
+      resultsBody.innerHTML = '<tr><td colspan="5" class="text-center p-4">Loading...</td></tr>';
+
+      // Show modal
+      document.getElementById('categoryFilterModal').classList.remove('hidden');
+
+      // Fetch expenses for the selected category
+      fetch(`fetch_expenses.php?category=${encodeURIComponent(category)}`)
+        .then(response => response.json())
+        .then(data => {
+          resultsBody.innerHTML = '';
+          
+          if (data.length === 0) {
+            resultsBody.innerHTML = '<tr><td colspan="5" class="text-center p-4 text-gray-500">No expenses found for this category</td></tr>';
+            document.getElementById('categoryTotal').textContent = '0';
+            return;
+          }
+
+          let total = 0;
+          data.forEach(expense => {
+            total += parseFloat(expense.amount);
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-violet-50';
+            row.innerHTML = `
+              <td class="p-3 text-black">${expense.date}</td>
+              <td class="p-3 text-black">${expense.item}</td>
+              <td class="p-3 text-black">₹${expense.amount.toLocaleString()}</td>
+              <td class="p-3 text-black">${expense.note || '-'}</td>
+              <td class="p-3">
+                ${expense.receipt_path ? 
+                  `<a href="${expense.receipt_path}" target="_blank" class="text-violet-700 hover:text-violet-800">
+                    <i class="fas fa-file-alt"></i> View
+                  </a>` : 
+                  '<span class="text-gray-500">-</span>'
+                }
+              </td>
+            `;
+            resultsBody.appendChild(row);
+          });
+
+          // Update total
+          document.getElementById('categoryTotal').textContent = total.toLocaleString();
+        })
+        .catch(error => {
+          console.error('Error fetching expenses:', error);
+          resultsBody.innerHTML = '<tr><td colspan="5" class="text-center p-4 text-red-500">Error loading expenses</td></tr>';
+          document.getElementById('categoryTotal').textContent = '0';
+        });
+    }
+
+    // Function to close category filter modal
+    function closeCategoryFilterModal() {
+      document.getElementById('categoryFilterModal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+CREATE DATABASE IF NOT EXISTS bbudget;
+USE bbudget;
+
+CREATE TABLE IF NOT EXISTS income (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    source VARCHAR(255) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    income_date DATE NOT NULL,
+    notes TEXT,
+    document VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+); 

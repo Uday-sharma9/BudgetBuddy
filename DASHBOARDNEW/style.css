@@ -1,0 +1,68 @@
+body {
+    background: linear-gradient(135deg, #6f42c1 0%, #6610f2 100%);
+    color: white;
+}
+
+.dashboard-card {
+    transition: transform 0.2s;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.income-card {
+    border-left: 5px solid #6f42c1;
+}
+
+.expense-card {
+    border-left: 5px solid #6f42c1;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-tabs .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.nav-tabs .nav-link.active {
+    font-weight: bold;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.table {
+    color: white;
+}
+
+.table thead th {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.table td {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-title {
+    color: white;
+}
+
+.table-hover tbody tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+}

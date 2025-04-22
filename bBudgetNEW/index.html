@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    <style>
+        .card-hover {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+        .input-focus:focus {
+            transform: scale(1.02);
+        }
+        .button-hover {
+            transition: all 0.3s ease;
+        }
+        .button-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .scrollbar-custom::-webkit-scrollbar {
+            width: 8px;
+        }
+        .scrollbar-custom::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .scrollbar-custom::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 10px;
+        }
+        .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-violet-100 to-purple-100 min-h-screen pt-[80px]">
+    <!-- Navbar -->
+    <nav class="bg-violet-600 p-4 h-[80px] shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="container mx-auto flex justify-between items-center px-6">
+    
+          <!-- Logo -->
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-pen-to-square" style="font-size: 3rem; color: #fdfdfd;"></i>
+            <span class="text-white text-2xl font-bold">BudgetBuddy</span>
+          </div>
+    
+          <!-- Desktop Menu -->
+          <ul class="hidden md:flex space-x-8 text-white font-semibold text-xl ml-[-150px]">
+            <li><a href="../av1.php" class="hover:underline underline-offset-8">Home</a></li>
+            <li><a href="../DASHBOARDNEW/index.php" class="hover:underline underline-offset-8">Dashboard</a></li>
+            <li><a href="index.html" class="hover:underline underline-offset-8">Budget</a></li>
+            <li><a href="../EXPENSESNEW/index.php" class="hover:underline underline-offset-8">Expenses</a></li>
+            <li><a href="../savings.html" class="hover:underline underline-offset-8">Savings</a></li>
+          </ul>
+    
+          <!-- Profile Button -->
+          <div class="hidden md:flex items-center space-x-4">
+            <div class="relative group">
+              <button class="flex items-center space-x-2 text-white hover:text-gray-200" onclick="toggleProfileMenu()">
+                <i class="fas fa-user-circle text-3xl"></i>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div id="profile-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden">
+                <a href="../profile.html" class="block px-4 py-2 text-gray-800 hover:bg-violet-100">My Profile</a>
+                <a href="../signUpLogin/logout.php" class="block px-4 py-2 text-gray-800 hover:bg-violet-100">Logout</a>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Mobile Menu Button -->
+          <button class="md:hidden text-white focus:outline-none" onclick="toggleMenu()">
+            <i class="fas fa-bars text-2xl" id="menu-icon"></i>
+          </button>
+        </div>
+    
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden bg-violet-700 text-white text-center absolute w-full top-[80px] transition-transform duration-300">
+          <ul class="px-6 py-4 space-y-3 text-xl">
+            <li><a href="../av1.php" class="block py-2 hover:underline underline-offset-8">Home</a></li>
+            <li><a href="../DASHBOARDNEW/index.php" class="block py-2 hover:underline underline-offset-8">Dashboard</a></li>
+            <li><a href="index.html" class="block py-2 hover:underline underline-offset-8">Budget</a></li>
+            <li><a href="../EXPENSESNEW/index.php" class="block py-2 hover:underline underline-offset-8">Expenses</a></li>
+            <li><a href="../savings.html" class="block py-2 hover:underline underline-offset-8">Savings</a></li>
+            <li><a href="../signUpLogin/logout.php" class="block py-2 bg-violet-500 text-white rounded-lg">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    <!-- Main Heading -->
+    <div class="text-center mt-8 mb-4 transform hover:scale-105 transition duration-300 p-4">
+        <h1 class="text-5xl md:text-6xl font-bold text-violet-800 drop-shadow-lg">Personal Budget Planner</h1>
+        <p class="text-violet-600 mt-2 text-xl">Track your income and expenses efficiently</p>
+    </div>
+
+    <!-- Budget Overview Section -->
+    <div id="budgetOverview" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 p-6">
+        <div class="bg-gradient-to-r from-violet-600 to-violet-700 text-white text-center p-6 rounded-lg shadow-xl card-hover">
+            <i class="fas fa-money-bill-wave text-4xl mb-4"></i>
+            <h2 class="text-xl font-bold">Monthly Income</h2>
+            <p id="monthly-income" class="text-3xl font-semibold mt-2">₹0</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-violet-500 to-violet-600 text-white text-center p-6 rounded-lg shadow-xl card-hover relative group">
+            <i class="fas fa-chart-pie text-4xl mb-4"></i>
+            <h2 class="text-xl font-bold">Monthly Budget</h2>
+            <div class="relative">
+                <p id="monthly-budget" class="text-3xl font-semibold mt-2">₹30,000</p>
+                <button id="edit-budget-btn" class="absolute right-0 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white hover:text-violet-200">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
+            <div id="budget-edit-form" class="hidden mt-2">
+                <input type="number" id="new-budget" class="w-full p-2 text-black rounded-lg text-center" placeholder="Enter new budget">
+                <div class="flex justify-center space-x-2 mt-2">
+                    <button id="save-budget" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <button id="cancel-budget" class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition duration-300">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-violet-700 to-violet-800 text-white text-center p-6 rounded-lg shadow-xl card-hover">
+            <i class="fas fa-wallet text-4xl mb-4"></i>
+            <h2 class="text-xl font-bold">Budget Left</h2>
+            <p id="budget-left" class="text-3xl font-semibold mt-2">₹30,000</p>
+        </div>
+    </div>
+
+    <!-- Income Details Modal -->
+    <div id="incomeModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[80vh] overflow-hidden">
+                <div class="p-6 border-b border-violet-200 flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-violet-700 flex items-center">
+                        <i class="fas fa-table mr-2"></i>All Income Details
+                    </h2>
+                    <button id="closeModal" class="text-gray-500 hover:text-violet-700 transition duration-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="p-6 overflow-auto max-h-[calc(80vh-100px)]">
+                    <table class="w-full border-collapse relative">
+                        <thead class="sticky top-0 z-10">
+                            <tr class="bg-gradient-to-r from-violet-500 to-violet-600 text-white shadow-md">
+                                <th class="px-4 py-3 text-left">Income Source</th>
+                                <th class="px-4 py-3 text-left">Amount (₹)</th>
+                                <th class="px-4 py-3 text-left">Date</th>
+                                <th class="px-4 py-3 text-left">Notes</th>
+                                <th class="px-4 py-3 text-left">Document</th>
+                                <th class="px-4 py-3 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal-income-table-body" class="text-violet-700">
+                            <!-- Data will be populated here -->
+                        </tbody>
+                        <tfoot class="bg-gradient-to-r from-violet-600 to-violet-700 text-white font-bold">
+                            <tr>
+                                <td class="px-4 py-3 text-left">Total</td>
+                                <td class="px-4 py-3 text-left" id="modal-total-amount">₹0</td>
+                                <td class="px-4 py-3 text-left" colspan="4"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Income Modal -->
+    <div id="editIncomeModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-lg">
+                <div class="p-6 border-b border-violet-200 flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-violet-700 flex items-center">
+                        <i class="fas fa-edit mr-2"></i>Edit Income
+                    </h2>
+                    <button id="closeEditModal" class="text-gray-500 hover:text-violet-700 transition duration-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <form id="edit-income-form" class="p-6 space-y-4 max-h-[70vh] overflow-y-auto scrollbar-custom" enctype="multipart/form-data">
+                    <input type="hidden" id="edit-id" name="id">
+                    <div>
+                        <label class="block font-semibold text-violet-700">Income Source</label>
+                        <input type="text" id="edit-source" name="source" required 
+                            class="w-full p-3 border border-violet-300 rounded-lg focus:ring-2 focus:ring-violet-500 input-focus">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-violet-700">Amount (₹)</label>
+                        <input type="number" id="edit-amount" name="amount" required 
+                            class="w-full p-3 border border-violet-300 rounded-lg focus:ring-2 focus:ring-violet-500 input-focus">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-violet-700">Date</label>
+                        <input type="date" id="edit-income_date" name="income_date" required 
+                            class="w-full p-3 border border-violet-300 rounded-lg focus:ring-2 focus:ring-violet-500 input-focus">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-violet-700">Notes</label>
+                        <textarea id="edit-notes" name="notes" rows="3" 
+                            class="w-full p-3 border border-violet-300 rounded-lg focus:ring-2 focus:ring-violet-500 input-focus"></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-violet-700">Current Document</label>
+                        <div id="current-document" class="text-violet-600 mb-2">
+                            <!-- Current document will be displayed here -->
+                        </div>
+                        <label class="block font-semibold text-violet-700">Upload New Document (Optional)</label>
+                        <div class="border-2 border-dashed border-violet-300 rounded-lg p-6 hover:border-violet-500 transition duration-300 relative" id="editDropZone">
+                            <input type="file" name="document" id="edit-document" accept=".pdf,.jpg,.jpeg,.png" 
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="handleEditFileSelect(event)">
+                            <div class="text-center">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-violet-500 mb-3"></i>
+                                <p class="text-violet-700 font-medium">Click to upload or drag and drop</p>
+                                <p class="text-sm text-gray-500 mt-2">PNG, JPG, PDF (MAX. 2MB)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between space-x-4">
+                        <button type="button" id="deleteIncomeBtn" 
+                            class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300">
+                            <i class="fas fa-trash-alt mr-2"></i>Delete
+                        </button>
+                        <div class="flex space-x-4">
+                            <button type="button" id="cancelEdit" 
+                                class="px-6 py-2 border border-violet-300 text-violet-700 rounded-lg hover:bg-violet-50 transition duration-300">
+                                Cancel
+                            </button>
+                            <button type="submit" 
+                                class="bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 text-white px-6 py-2 rounded-lg font-semibold button-hover">
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-md transform transition-all">
+                <div class="p-6 border-b border-violet-200">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="bg-red-100 p-3 rounded-full">
+                            <i class="fas fa-exclamation-triangle text-red-500 text-3xl"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold text-violet-700 text-center">Delete Income Record</h2>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-700 text-center mb-6">Are you sure you want to delete this income record? This action cannot be undone.</p>
+                    <input type="hidden" id="delete-id">
+                    <div class="flex justify-center space-x-4">
+                        <button id="cancelDelete" 
+                            class="px-6 py-2 border border-violet-300 text-violet-700 rounded-lg hover:bg-violet-50 transition duration-300">
+                            <i class="fas fa-times mr-2"></i>Cancel
+                        </button>
+                        <button id="confirmDelete" 
+                            class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300">
+                            <i class="fas fa-trash-alt mr-2"></i>Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Income Form -->
+    <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-xl border border-violet-200 card-hover">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-violet-700 flex items-center">
+                <i class="fas fa-plus-circle mr-2"></i> Add Income
+            </h2>
+            <button id="viewAllIncomeBtn" class="bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 text-white px-4 py-2 rounded-lg font-semibold button-hover flex items-center text-sm">
+                <i class="fas fa-list-alt mr-2"></i>View All Income
+            </button>
+        </div>
+
+        <form id="income-form" class="space-y-6" enctype="multipart/form-data">
+            <div class="space-y-2">
+                <label class="block font-semibold text-violet-700">Income Source</label>
+                <input type="text" name="source" id="source" required 
+                    class="w-full p-3 border border-violet-300 rounded-lg focus:ring-2 focus:ring-violet-500 input-focus">
+            </div>
+
+            <div class="space-y-2">
+                <label class="block font-semibold text-violet-700">Amount (₹)</label>
+                <input type="number" name="amount" id="amount" required 
+                    class="w-full p-3 border border-violet-300 rounded-lg focus:ring-2 focus:ring-violet-500 input-focus">
+            </div>
+
+            <div class="space-y-2">
+                <label class="block font-semibold text-violet-700">Date</label>
+                <input type="date" name="income_date" id="income_date" required 
+                    class="w-full p-3 border border-violet-300 rounded-lg focus:ring-2 focus:ring-violet-500 input-focus">
+            </div>
+
+            <div class="space-y-2">
+                <label class="block font-semibold text-violet-700">Notes</label>
+                <textarea name="notes" id="notes" rows="3" 
+                    class="w-full p-3 border border-violet-300 rounded-lg focus:ring-2 focus:ring-violet-500 input-focus"
+                    placeholder="Add any additional notes about this income..."></textarea>
+            </div>
+
+            <div class="space-y-2">
+                <label class="block font-semibold text-violet-700">Upload Document (Optional)</label>
+                <div class="border-2 border-dashed border-violet-300 rounded-lg p-6 hover:border-violet-500 transition duration-300 relative" id="dropZone">
+                    <input type="file" name="document" id="document" accept=".pdf,.jpg,.jpeg,.png" 
+                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="handleFileSelect(event)">
+                    <div class="text-center">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-violet-500 mb-3"></i>
+                        <p class="text-violet-700 font-medium">Click to upload or drag and drop</p>
+                        <p class="text-sm text-gray-500 mt-2">PNG, JPG, PDF (MAX. 2MB)</p>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" 
+                class="w-full bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 text-white px-6 py-3 rounded-lg font-semibold button-hover">
+                <i class="fas fa-save mr-2"></i>Save Income
+            </button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            loadIncomeData();
+
+            // Modal functionality
+            $('#viewAllIncomeBtn').click(function() {
+                $('#incomeModal').removeClass('hidden');
+                loadModalIncomeData();
+            });
+
+            $('#closeModal').click(function() {
+                $('#incomeModal').addClass('hidden');
+            });
+
+            // Close modal when clicking outside
+            $(window).click(function(e) {
+                if ($(e.target).is('#incomeModal')) {
+                    $('#incomeModal').addClass('hidden');
+                }
+            });
+
+            function loadModalIncomeData() {
+                $.ajax({
+                    url: 'debug_ajax.php',  // Changed to use our debug script
+                    method: 'GET',
+                    success: function(response) {
+                        console.log("Fetched data:", response);
+                        
+                        // Check if response is a string that needs to be parsed
+                        var data;
+                        if (typeof response === 'string') {
+                            try {
+                                data = JSON.parse(response);
+                            } catch (e) {
+                                console.error("Error parsing JSON:", e);
+                                $('#modal-income-table-body').html('<tr><td colspan="6" class="px-4 py-3 text-center text-red-500">Error parsing data</td></tr>');
+                                return;
+                            }
+                        } else {
+                            data = response;
+                        }
+                        
+                        // Check if we have the expected structure
+                        if (data.status === 'success' && data.data) {
+                            data = data.data;  // Use the data property from our debug response
+                        }
+                        
+                        var tableRows = '';
+                        var totalAmount = 0;
+
+                        if(!data || data.length === 0) {
+                            tableRows = '<tr><td colspan="6" class="px-4 py-3 text-center text-gray-500">No income records found</td></tr>';
+                        } else {
+                            data.forEach(function(item) {
+                                var amount = parseInt(item.amount);
+                                totalAmount += amount;
+                                
+                                tableRows += `
+                                    <tr class='border-b hover:bg-violet-50 transition duration-300'>
+                                        <td class='px-4 py-3'>${item.source}</td>
+                                        <td class='px-4 py-3'>₹${item.amount}</td>
+                                        <td class='px-4 py-3'>${item.income_date}</td>
+                                        <td class='px-4 py-3'>${item.notes || '-'}</td>
+                                        <td class='px-4 py-3'>${item.document ? `<a href="${item.document}" target="_blank" class="text-violet-600 hover:text-violet-800 transition duration-300"><i class="fas fa-file-alt"></i> View</a>` : '-'}</td>
+                                        <td class='px-4 py-3 flex space-x-4 justify-center'>
+                                            <button onclick="editIncome(${item.id}, '${item.source}', ${item.amount}, '${item.income_date}', '${item.notes || ''}', '${item.document || '-'}')" 
+                                                class="text-violet-600 hover:text-violet-800 transition duration-300 text-lg">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button onclick="deleteIncome(${item.id})" 
+                                                class="text-red-600 hover:text-red-800 transition duration-300 text-lg">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `;
+                            });
+                        }
+
+                        $('#modal-income-table-body').html(tableRows);
+                        $('#modal-total-amount').text('₹' + totalAmount);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching income data:", error);
+                        console.error("Status:", status);
+                        console.error("Response:", xhr.responseText);
+                        $('#modal-income-table-body').html('<tr><td colspan="6" class="px-4 py-3 text-center text-red-500">Error loading income data</td></tr>');
+                    }
+                });
+            }
+
+            $('#income-form').submit(function(event) {
+                event.preventDefault();
+                console.log("Form submitted");
+
+                var formData = new FormData(this);
+                
+                // Log form data for debugging
+                for (var pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1]);
+                }
+
+                $.ajax({
+                    url: 'add_income.php',
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log("Response:", response);
+                        if(response === "success") {
+                            $('#source').val('');
+                            $('#amount').val('');
+                            $('#income_date').val('');
+                            $('#notes').val('');
+                            $('#document').val('');
+                            loadIncomeData();
+                            alert("Income added successfully!");
+                        } else {
+                            alert("Error: " + response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                        alert("Error saving income: " + error);
+                    }
+                });
+            });
+
+            function loadIncomeData() {
+                $.ajax({
+                    url: 'debug_ajax.php',
+                    method: 'GET',
+                    success: function(response) {
+                        console.log("Fetched data for summary:", response);
+                        
+                        var data;
+                        if (typeof response === 'string') {
+                            try {
+                                data = JSON.parse(response);
+                            } catch (e) {
+                                console.error("Error parsing JSON:", e);
+                                return;
+                            }
+                        } else {
+                            data = response;
+                        }
+                        
+                        if (data.status === 'success' && data.data) {
+                            data = data.data;
+                        }
+                        
+                        var totalIncome = 0;
+                        var highestIncome = 0;
+                        var totalRecords = data.length;
+
+                        data.forEach(function(item) {
+                            var amount = parseInt(item.amount);
+                            totalIncome += amount;
+                            if (amount > highestIncome) {
+                                highestIncome = amount;
+                            }
+                        });
+
+                        var averageIncome = totalRecords > 0 ? Math.round(totalIncome / totalRecords) : 0;
+
+                        // Update statistics
+                        $('#monthly-income').text('₹' + totalIncome);
+                        $('#highest-income').text('₹' + highestIncome);
+                        $('#average-income').text('₹' + averageIncome);
+                        $('#total-records').text(totalRecords);
+
+                        // Get the current monthly budget
+                        var monthlyBudget = parseInt($('#monthly-budget').text().replace('₹', '').replace(/,/g, ''));
+                        
+                        // Calculate budget left (Monthly Income - Monthly Budget)
+                        var budgetLeft = totalIncome - monthlyBudget;
+                        
+                        // Update the budget left display
+                        $('#budget-left').text('₹' + budgetLeft);
+                        
+                        // Add color coding based on whether budget is exceeded
+                        if (budgetLeft < 0) {
+                            $('#budget-left').addClass('text-red-500').removeClass('text-white');
+                        } else {
+                            $('#budget-left').addClass('text-white').removeClass('text-red-500');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching income data for summary:", error);
+                    }
+                });
+            }
+
+            // Drag and drop functionality
+            const dropZone = document.getElementById('dropZone');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+                dropZone.classList.add('border-violet-500', 'bg-violet-50');
+            }
+
+            function unhighlight(e) {
+                dropZone.classList.remove('border-violet-500', 'bg-violet-50');
+            }
+
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFiles(files);
+            }
+
+            function handleFileSelect(e) {
+                const files = e.target.files;
+                handleFiles(files);
+            }
+
+            function handleFiles(files) {
+                if (files.length > 0) {
+                    const file = files[0];
+                    const fileSize = file.size / 1024 / 1024; // in MB
+                    
+                    if (fileSize > 2) {
+                        alert('File size exceeds 2MB limit');
+                        return;
+                    }
+                    
+                    const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+                    if (!validTypes.includes(file.type)) {
+                        alert('Please upload a valid file type (PNG, JPG, PDF)');
+                        return;
+                    }
+                    
+                    document.getElementById('document').files = files;
+                }
+            }
+
+            // Edit Income Modal Functions
+            window.editIncome = function(id, source, amount, date, notes, document) {
+                $('#edit-id').val(id);
+                $('#edit-source').val(source);
+                $('#edit-amount').val(amount);
+                $('#edit-income_date').val(date);
+                $('#edit-notes').val(notes);
+                
+                // Display current document if it exists
+                if (document && document !== '-') {
+                    $('#current-document').html(`<a href="${document}" target="_blank" class="text-violet-600 hover:text-violet-800 transition duration-300"><i class="fas fa-file-alt"></i> View Current Document</a>`);
+                } else {
+                    $('#current-document').html('<span class="text-gray-500">No document attached</span>');
+                }
+                
+                $('#editIncomeModal').removeClass('hidden');
+            }
+
+            $('#closeEditModal, #cancelEdit').click(function() {
+                $('#editIncomeModal').addClass('hidden');
+            });
+
+            $(window).click(function(e) {
+                if ($(e.target).is('#editIncomeModal')) {
+                    $('#editIncomeModal').addClass('hidden');
+                }
+                if ($(e.target).is('#deleteConfirmModal')) {
+                    $('#deleteConfirmModal').addClass('hidden');
+                }
+            });
+
+            $('#edit-income-form').on('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                
+                $.ajax({
+                    url: 'update_income.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: response.message
+                            }).then(() => {
+                                $('#editIncomeModal').modal('hide');
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.message || 'An error occurred while updating the income.'
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        let errorMessage = 'An error occurred while updating the income.';
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            errorMessage = response.message || errorMessage;
+                        } catch (e) {
+                            console.error('Error parsing response:', xhr.responseText);
+                        }
+                        
+                        Swal.fire({
+                        console.error("AJAX Error:", error);
+                        console.error("Response:", xhr.responseText);
+                        alert("Error updating income: " + error);
+                    }
+                });
+            });
+
+            // Edit Drop Zone Functions
+            const editDropZone = document.getElementById('editDropZone');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                editDropZone.addEventListener(eventName, preventEditDefaults, false);
+            });
+
+            function preventEditDefaults (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                editDropZone.addEventListener(eventName, highlightEdit, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                editDropZone.addEventListener(eventName, unhighlightEdit, false);
+            });
+
+            function highlightEdit(e) {
+                editDropZone.classList.add('border-violet-500', 'bg-violet-50');
+            }
+
+            function unhighlightEdit(e) {
+                editDropZone.classList.remove('border-violet-500', 'bg-violet-50');
+            }
+
+            editDropZone.addEventListener('drop', handleEditDrop, false);
+
+            function handleEditDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleEditFiles(files);
+            }
+
+            function handleEditFileSelect(e) {
+                const files = e.target.files;
+                handleEditFiles(files);
+            }
+
+            function handleEditFiles(files) {
+                if (files.length > 0) {
+                    const file = files[0];
+                    const fileSize = file.size / 1024 / 1024; // in MB
+                    
+                    if (fileSize > 2) {
+                        alert('File size exceeds 2MB limit');
+                        return;
+                    }
+                    
+                    const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+                    if (!validTypes.includes(file.type)) {
+                        alert('Please upload a valid file type (PNG, JPG, PDF)');
+                        return;
+                    }
+                    
+                    document.getElementById('edit-document').files = files;
+                }
+            }
+
+            // Delete Income Functions
+            window.deleteIncome = function(id) {
+                $('#delete-id').val(id);
+                $('#deleteConfirmModal').removeClass('hidden');
+            }
+
+            $('#confirmDelete').click(function() {
+                var id = $('#delete-id').val();
+                
+                $.ajax({
+                    url: 'update_income.php',
+                    method: 'POST',
+                    data: {
+                        action: 'delete',
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if(response.status === 'success') {
+                            $('#deleteConfirmModal').addClass('hidden');
+                            loadModalIncomeData();
+                            loadIncomeData();
+                            alert("Income deleted successfully!");
+                        } else {
+                            alert("Error: " + (response.message || "Failed to delete income"));
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                        console.error("Status:", status);
+                        console.error("Response:", xhr.responseText);
+                        alert("Error deleting income. Please try again.");
+                    }
+                });
+            });
+
+            $('#cancelDelete').click(function() {
+                $('#deleteConfirmModal').addClass('hidden');
+            });
+
+            // Close delete modal when clicking outside
+            $(window).click(function(e) {
+                if ($(e.target).is('#deleteConfirmModal')) {
+                    $('#deleteConfirmModal').addClass('hidden');
+                }
+            });
+
+            // Export to Excel function
+            function exportToExcel() {
+                $.ajax({
+                    url: 'export_income.php',
+                    method: 'GET',
+                    success: function(response) {
+                        // Create a temporary link to download the file
+                        var link = document.createElement('a');
+                        link.href = 'data:application/vnd.ms-excel;base64,' + response;
+                        link.download = 'income_report.xlsx';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Error exporting data: " + error);
+                    }
+                });
+            }
+
+            // Print Report function
+            function printReport() {
+                window.print();
+            }
+
+            // Show Charts function
+            function showCharts() {
+                // Create a modal for charts
+                var chartsModal = `
+                    <div id="chartsModal" class="fixed inset-0 bg-black bg-opacity-50 z-50">
+                        <div class="flex items-center justify-center min-h-screen p-4">
+                            <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl">
+                                <div class="p-6 border-b border-violet-200 flex justify-between items-center">
+                                    <h2 class="text-2xl font-bold text-violet-700">Income Charts</h2>
+                                    <button onclick="closeChartsModal()" class="text-gray-500 hover:text-violet-700">
+                                        <i class="fas fa-times text-xl"></i>
+                                    </button>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div class="bg-white p-4 rounded-lg shadow">
+                                            <h3 class="text-lg font-semibold text-violet-700 mb-4">Monthly Income Trend</h3>
+                                            <canvas id="incomeChart" class="w-full h-64"></canvas>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg shadow">
+                                            <h3 class="text-lg font-semibold text-violet-700 mb-4">Income Distribution</h3>
+                                            <canvas id="pieChart" class="w-full h-64"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                $('body').append(chartsModal);
+                $('#chartsModal').removeClass('hidden');
+                
+                // Load Chart.js and create charts
+                $.getScript('https://cdn.jsdelivr.net/npm/chart.js', function() {
+                    createCharts();
+                });
+            }
+
+            function closeChartsModal() {
+                $('#chartsModal').addClass('hidden');
+                setTimeout(() => {
+                    $('#chartsModal').remove();
+                }, 300);
+            }
+
+            function createCharts() {
+                $.ajax({
+                    url: 'debug_ajax.php',
+                    method: 'GET',
+                    success: function(response) {
+                        var data = typeof response === 'string' ? JSON.parse(response) : response;
+                        if (data.status === 'success' && data.data) {
+                            data = data.data;
+                        }
+
+                        // Process data for line chart
+                        var monthlyData = {};
+                        data.forEach(function(item) {
+                            var date = new Date(item.income_date);
+                            var monthYear = date.getFullYear() + '-' + (date.getMonth() + 1);
+                            if (!monthlyData[monthYear]) {
+                                monthlyData[monthYear] = 0;
+                            }
+                            monthlyData[monthYear] += parseInt(item.amount);
+                        });
+
+                        // Create line chart
+                        var ctx = document.getElementById('incomeChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: Object.keys(monthlyData),
+                                datasets: [{
+                                    label: 'Monthly Income',
+                                    data: Object.values(monthlyData),
+                                    borderColor: 'rgb(124, 58, 237)',
+                                    tension: 0.1,
+                                    fill: true,
+                                    backgroundColor: 'rgba(124, 58, 237, 0.1)'
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'top'
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: {
+                                            callback: function(value) {
+                                                return '₹' + value;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        // Process data for pie chart
+                        var sourceData = {};
+                        data.forEach(function(item) {
+                            if (!sourceData[item.source]) {
+                                sourceData[item.source] = 0;
+                            }
+                            sourceData[item.source] += parseInt(item.amount);
+                        });
+
+                        // Create pie chart
+                        var pieCtx = document.getElementById('pieChart').getContext('2d');
+                        new Chart(pieCtx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: Object.keys(sourceData),
+                                datasets: [{
+                                    data: Object.values(sourceData),
+                                    backgroundColor: [
+                                        'rgb(124, 58, 237)',
+                                        'rgb(139, 92, 246)',
+                                        'rgb(167, 139, 250)',
+                                        'rgb(192, 132, 252)',
+                                        'rgb(217, 70, 239)',
+                                        'rgb(236, 72, 153)'
+                                    ]
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        position: 'right',
+                                        labels: {
+                                            font: {
+                                                size: 12
+                                            }
+                                        }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                var label = context.label || '';
+                                                var value = context.raw || 0;
+                                                var total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                                var percentage = Math.round((value * 100) / total);
+                                                return label + ': ₹' + value + ' (' + percentage + '%)';
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Backup Data function
+            function backupData() {
+                $.ajax({
+                    url: 'backup_income.php',
+                    method: 'GET',
+                    success: function(response) {
+                        var link = document.createElement('a');
+                        link.href = 'data:application/json;base64,' + response;
+                        link.download = 'income_backup.json';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Error creating backup: " + error);
+                    }
+                });
+            }
+
+            // Budget Edit Functionality
+            $('#edit-budget-btn').click(function() {
+                $('#monthly-budget').addClass('hidden');
+                $('#budget-edit-form').removeClass('hidden');
+                $('#new-budget').val($('#monthly-budget').text().replace('₹', ''));
+                $('#new-budget').focus();
+            });
+
+            $('#save-budget').click(function() {
+                var newBudget = $('#new-budget').val();
+                if (newBudget && !isNaN(newBudget)) {
+                    $('#monthly-budget').text('₹' + newBudget);
+                    $('#budget-edit-form').addClass('hidden');
+                    $('#monthly-budget').removeClass('hidden');
+                    loadIncomeData(); // Recalculate budget left
+                } else {
+                    alert('Please enter a valid budget amount');
+                }
+            });
+
+            $('#cancel-budget').click(function() {
+                $('#budget-edit-form').addClass('hidden');
+                $('#monthly-budget').removeClass('hidden');
+            });
+
+            // Close budget edit form when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('#budget-edit-form, #edit-budget-btn').length) {
+                    $('#budget-edit-form').addClass('hidden');
+                    $('#monthly-budget').removeClass('hidden');
+                }
+            });
+
+            function toggleMenu() {
+              const menu = document.getElementById('mobile-menu');
+              const icon = document.getElementById('menu-icon');
+  
+              if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+              } else {
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+              }
+            }
+            
+            function toggleProfileMenu() {
+              const dropdown = document.getElementById('profile-dropdown');
+              if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+              } else {
+                dropdown.classList.add('hidden');
+              }
+            }
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+              const dropdown = document.getElementById('profile-dropdown');
+              const profileButton = document.querySelector('.relative.group button');
+              
+              if (dropdown && profileButton && !profileButton.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+              }
+            });
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white mt-6 py-6 ms-0 h-full w-full">
+        <div class="max-w-7xl mx-auto md:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center text">
+                
+                <!-- Left: BudgetBuddy Branding -->
+                <div>
+                    <h2 class="text-lg font-bold">BudgetBuddy</h2>
+                    <p class="text-white mt-1 text-sm">Your trusted partner in financial planning</p>
+                    <div class="space-x-3 font-bold mt-2">
+                        <a href="#" class="inline-block text-white hover:text-violet-300 transition-colors duration-300">
+                            <i class="fa-brands fa-facebook" style="font-size: 1.5rem"></i>
+                        </a>
+                        <a href="#" class="inline-block text-white hover:text-violet-300 transition-colors duration-300">
+                            <i class="fa-brands fa-instagram" style="font-size: 1.5rem"></i>
+                        </a>
+                        <a href="#" class="inline-block text-white hover:text-violet-300 transition-colors duration-300">
+                            <i class="fa-brands fa-twitter" style="font-size: 1.5rem"></i>
+                        </a>
+                        <a href="#" class="inline-block text-white hover:text-violet-300 transition-colors duration-300">
+                            <i class="fa-brands fa-linkedin" style="font-size: 1.5rem"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Middle: Quick Links -->
+                <div>
+                    <h2 class="text-lg font-bold">Quick Links</h2>
+                    <ul class="mt-1 space-y-1">
+                        <li>
+                            <a href="../av1.php" class="text-white text-sm hover:text-violet-300 transition-colors duration-300">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../DASHBOARDNEW/index.php" class="text-white text-sm hover:text-violet-300 transition-colors duration-300">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html" class="text-white text-sm hover:text-violet-300 transition-colors duration-300">
+                                Budget
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../EXPENSESNEW/index.php" class="text-white text-sm hover:text-violet-300 transition-colors duration-300">
+                                Expenses
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right: Contact Info -->
+                <div>
+                    <h2 class="text-lg font-bold">Contact Us</h2>
+                    <div class="mt-1 space-y-1">
+                        <p class="text-white text-sm flex items-center justify-center gap-2">
+                            <i class="fas fa-envelope text-white"></i>
+                            <span>Email: support@budgetbuddy.com</span>
+                        </p>
+                        <p class="text-white text-sm flex items-center justify-center gap-2">
+                            <i class="fas fa-phone text-white"></i>
+                            <span>Phone: 1100198763</span>
+                        </p>
+                        <p class="text-white text-sm flex items-center justify-center gap-2">
+                            <i class="fas fa-map-marker-alt text-white"></i>
+                            <span>Address: BudgetBuddy Office,Phagwara,Punjab, India</span>
+                        </p>
+                    </div>
+                </div>
+            
+            </div>
+
+            <!-- Bottom: Copyright -->
+            <div class="mt-4 border-t border-gray-700 pt-3 text-center text-white text-sm">
+                © 2025 BudgetBuddy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
